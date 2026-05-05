@@ -1,1190 +1,213 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="light">
+<html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>DealFinder – Local Retail Markdowns 75–99% Off</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300..700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
-<!-- Removed unused Lucide script for better performance -->
-<style>
-/* Art direction: Retail deal-finder → precise, vibrant, trust-building
-   Palette: warm neutrals, accent: --color-primary teal for CTAs, --color-notification red for discount badges
-   Typography: Instrument Serif (display) + Inter (body)
-   Density: balanced */
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DealFinder Pro | Ultra-Fast Local Deals</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #3b82f6;
+      --primary-dark: #2563eb;
+      --accent: #ef4444;
+      --bg-gray: #f9fafb;
+      --text-main: #111827;
+      --text-muted: #6b7280;
+      --card-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+      --card-shadow-hover: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    }
 
-:root, [data-theme="light"] {
-  --text-xs:   clamp(0.75rem,  0.7rem  + 0.25vw, 0.875rem);
-  --text-sm:   clamp(0.875rem, 0.8rem  + 0.35vw, 1rem);
-  --text-base: clamp(1rem,     0.95rem + 0.25vw, 1.125rem);
-  --text-lg:   clamp(1.125rem, 1rem    + 0.75vw, 1.5rem);
-  --text-xl:   clamp(1.5rem,   1.2rem  + 1.25vw, 2.25rem);
-  --text-2xl:  clamp(2rem,     1.2rem  + 2.5vw,  3.5rem);
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Inter', sans-serif; background-color: var(--bg-gray); color: var(--text-main); line-height: 1.5; }
 
-  --space-1: 0.25rem; --space-2: 0.5rem; --space-3: 0.75rem; --space-4: 1rem;
-  --space-5: 1.25rem; --space-6: 1.5rem; --space-8: 2rem; --space-10: 2.5rem;
-  --space-12: 3rem; --space-16: 4rem;
+    /* NAVIGATION */
+    .nav-header {
+      background: white;
+      border-bottom: 1px solid #e5e7eb;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
 
-  --color-bg:              #f7f6f2;
-  --color-surface:         #f9f8f5;
-  --color-surface-2:       #fbfbf9;
-  --color-surface-offset:  #f3f0ec;
-  --color-surface-dynamic: #e6e4df;
-  --color-divider:         #dcd9d5;
-  --color-border:          #d4d1ca;
-  --color-text:            #28251d;
-  --color-text-muted:      #6b6a65;
-  --color-text-faint:      #bab9b4;
-  --color-text-inverse:    #f9f8f4;
-  --color-primary:         #01696f;
-  --color-primary-hover:   #0c4e54;
-  --color-primary-highlight: #cedcd8;
-  --color-error:           #a12c7b;
-  --color-notification:    #b8212f;
-  --color-notification-highlight: #f4e7e8;
-  --color-gold:            #d19900;
-  --color-gold-highlight:  #f5edcc;
-  --color-success:         #437a22;
-  --color-success-highlight: #d4dfcc;
+    .logo { font-weight: 800; font-size: 1.5rem; color: var(--primary); letter-spacing: -0.05em; }
 
-  --radius-sm: 0.375rem; --radius-md: 0.5rem; --radius-lg: 0.75rem;
-  --radius-xl: 1rem; --radius-full: 9999px;
-  --transition-interactive: 180ms cubic-bezier(0.16, 1, 0.3, 1);
-  --shadow-sm: 0 1px 2px oklch(0.2 0.01 80 / 0.06);
-  --shadow-md: 0 4px 12px oklch(0.2 0.01 80 / 0.08);
-  --shadow-lg: 0 12px 32px oklch(0.2 0.01 80 / 0.12);
-  --content-wide: 1200px;
-  --font-display: 'Instrument Serif', Georgia, serif;
-  --font-body: 'Inter', 'Helvetica Neue', sans-serif;
-}
+    /* LAYOUT */
+    .container { display: grid; grid-template-columns: 280px 1fr; gap: 2rem; max-width: 1400px; margin: 2rem auto; padding: 0 1rem; }
 
-[data-theme="dark"] {
-  --color-bg:              #171614;
-  --color-surface:         #1c1b19;
-  --color-surface-2:       #201f1d;
-  --color-surface-offset:  #1d1c1a;
-  --color-surface-dynamic: #2d2c2a;
-  --color-divider:         #262523;
-  --color-border:          #393836;
-  --color-text:            #cdccca;
-  --color-text-muted:      #979693;
-  --color-text-faint:      #5a5957;
-  --color-text-inverse:    #2b2a28;
-  --color-primary:         #4f98a3;
-  --color-primary-hover:   #227f8b;
-  --color-primary-highlight: #313b3b;
-  --color-notification:    #e05a62;
-  --color-notification-highlight: #3d2628;
-  --color-gold:            #e8af34;
-  --color-gold-highlight:  #3d3420;
-  --color-success:         #6daa45;
-  --color-success-highlight: #2a3422;
-  --shadow-sm: 0 1px 2px oklch(0 0 0 / 0.2);
-  --shadow-md: 0 4px 12px oklch(0 0 0 / 0.3);
-  --shadow-lg: 0 12px 32px oklch(0 0 0 / 0.4);
-}
+    /* SIDEBAR FILTERS */
+    .sidebar { background: white; padding: 1.5rem; border-radius: 12px; height: fit-content; border: 1px solid #e5e7eb; position: sticky; top: 5rem; }
+    .filter-group { margin-bottom: 2rem; }
+    .filter-title { font-weight: 700; margin-bottom: 1rem; font-size: 0.9rem; text-transform: uppercase; color: var(--text-muted); }
+    
+    .chip-container { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+    .filter-chip { 
+      background: #f3f4f6; border: none; padding: 0.5rem 1rem; border-radius: 999px; 
+      font-size: 0.85rem; cursor: pointer; transition: all 0.2s; font-weight: 500;
+    }
+    .filter-chip.active { background: var(--primary); color: white; }
+    .filter-chip:hover:not(.active) { background: #e5e7eb; }
 
-@media (prefers-color-scheme: dark) { :root:not([data-theme]) {
-  --color-bg:#171614; --color-surface:#1c1b19; --color-surface-2:#201f1d;
-  --color-surface-offset:#1d1c1a; --color-surface-dynamic:#2d2c2a;
-  --color-divider:#262523; --color-border:#393836;
-  --color-text:#cdccca; --color-text-muted:#979693; --color-text-faint:#5a5957;
-  --color-primary:#4f98a3; --color-primary-hover:#227f8b; --color-primary-highlight:#313b3b;
-  --color-notification:#e05a62; --color-notification-highlight:#3d2628;
-  --color-gold:#e8af34; --color-gold-highlight:#3d3420;
-  --color-success:#6daa45; --color-success-highlight:#2a3422;
-  --shadow-sm:0 1px 2px oklch(0 0 0/.2); --shadow-md:0 4px 12px oklch(0 0 0/.3); --shadow-lg:0 12px 32px oklch(0 0 0/.4);
-}}
+    /* SEARCH BAR */
+    .search-wrapper { margin-bottom: 2rem; position: relative; }
+    .search-input { 
+      width: 100%; padding: 1rem 1rem 1rem 3rem; border-radius: 12px; border: 1px solid #e5e7eb; 
+      font-size: 1rem; transition: border-color 0.2s; 
+    }
+    .search-input:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1); }
 
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html { -webkit-font-smoothing: antialiased; scroll-behavior: smooth; scroll-padding-top: 80px; }
-body { min-height: 100dvh; font-family: var(--font-body); font-size: var(--text-base); color: var(--color-text); background: var(--color-bg); line-height: 1.6; }
-img, svg { display: block; max-width: 100%; }
-ul[role="list"] { list-style: none; }
-input, button, select { font: inherit; color: inherit; }
-button { cursor: pointer; background: none; border: none; }
-a, button, [role="button"], input, select { transition: color var(--transition-interactive), background var(--transition-interactive), border-color var(--transition-interactive), box-shadow var(--transition-interactive); }
-:focus-visible { outline: 2px solid var(--color-primary); outline-offset: 3px; border-radius: var(--radius-sm); }
-.sr-only { position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border-width:0; }
-@media (prefers-reduced-motion: reduce) { *,*::before,*::after { animation-duration:0.01ms!important;transition-duration:0.01ms!important; }}
+    /* DEAL CARDS */
+    .deals-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1.5rem; }
+    
+    .deal-card { 
+      background: white; border-radius: 16px; overflow: hidden; border: 1px solid #e5e7eb;
+      transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease;
+      display: flex; flex-direction: column;
+    }
+    .deal-card:hover { transform: translateY(-8px); box-shadow: var(--card-shadow-hover); border-color: var(--primary); }
 
-/* ── HEADER ── */
-.header {
-  position: sticky; top: 0; z-index: 100;
-  background: var(--color-surface);
-  border-bottom: 1px solid var(--color-divider);
-  box-shadow: var(--shadow-sm);
-}
-.header-inner {
-  max-width: var(--content-wide); margin-inline: auto;
-  padding: var(--space-3) var(--space-6);
-  display: flex; align-items: center; gap: var(--space-4);
-}
-.logo { display: flex; align-items: center; gap: var(--space-2); text-decoration: none; flex-shrink: 0; }
-.logo-text { font-family: var(--font-display); font-size: var(--text-lg); color: var(--color-text); }
-.logo-text span { color: var(--color-notification); }
-.header-tagline { font-size: var(--text-xs); color: var(--color-text-muted); display: none; }
-@media (min-width: 600px) { .header-tagline { display: block; } }
-.header-actions { margin-left: auto; display: flex; align-items: center; gap: var(--space-2); }
-.btn-icon { padding: var(--space-2); border-radius: var(--radius-md); color: var(--color-text-muted); display: flex; align-items: center; justify-content: center; }
-.btn-icon:hover { background: var(--color-surface-offset); color: var(--color-text); }
+    .deal-card-img { width: 100%; height: 200px; object-fit: cover; background: #eee; }
+    
+    .deal-card-body { padding: 1.25rem; flex-grow: 1; }
+    .deal-card-badges { display: flex; gap: 0.5rem; margin-bottom: 0.75rem; }
+    
+    .badge { padding: 0.25rem 0.6rem; border-radius: 6px; font-size: 0.75rem; font-weight: 700; }
+    .badge-discount { background: var(--accent); color: white; animation: pulse 2s infinite; }
+    .badge-category { background: #eff6ff; color: var(--primary); }
 
-/* ── HERO SEARCH ── */
-.hero {
-  background: linear-gradient(135deg, var(--color-primary) 0%, #014f54 100%);
-  padding: var(--space-12) var(--space-6);
-  text-align: center;
-}
-.hero-eyebrow { font-size: var(--text-xs); font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: oklch(from var(--color-primary-highlight) l c h / 0.85); margin-bottom: var(--space-3); }
-.hero-heading { font-family: var(--font-display); font-size: var(--text-xl); color: #f9f8f5; margin-bottom: var(--space-2); line-height: 1.2; }
-.hero-heading em { font-style: italic; color: #f5c84a; }
-.hero-sub { font-size: var(--text-sm); color: oklch(from #f9f8f5 l c h / 0.78); margin-bottom: var(--space-8); max-width: 48ch; margin-inline: auto; }
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.03); }
+      100% { transform: scale(1); }
+    }
 
-.search-bar {
-  max-width: 680px; margin-inline: auto;
-  display: flex; flex-direction: column; gap: var(--space-3);
-}
-.search-row { display: flex; gap: var(--space-2); }
-.search-input-wrap { flex: 1; position: relative; }
-.search-input-icon { position: absolute; left: var(--space-3); top: 50%; transform: translateY(-50%); color: var(--color-text-muted); pointer-events: none; width: 18px; height: 18px; }
-.search-input {
-  width: 100%; padding: var(--space-3) var(--space-3) var(--space-3) calc(var(--space-3) + 24px);
-  border: 1px solid oklch(from #f9f8f5 l c h / 0.25);
-  border-radius: var(--radius-lg); background: oklch(from #f9f8f5 l c h / 0.12);
-  color: #f9f8f5; font-size: var(--text-sm);
-}
-.search-input::placeholder { color: oklch(from #f9f8f5 l c h / 0.55); }
-.search-input:focus { outline: 2px solid #f5c84a; outline-offset: 2px; background: oklch(from #f9f8f5 l c h / 0.18); }
-.zip-input {
-  width: 130px; padding: var(--space-3) var(--space-3) var(--space-3) calc(var(--space-3) + 24px);
-  border: 1px solid oklch(from #f9f8f5 l c h / 0.25);
-  border-radius: var(--radius-lg); background: oklch(from #f9f8f5 l c h / 0.12);
-  color: #f9f8f5; font-size: var(--text-sm); flex-shrink: 0;
-}
-.zip-input::placeholder { color: oklch(from #f9f8f5 l c h / 0.55); }
-.zip-input:focus { outline: 2px solid #f5c84a; outline-offset: 2px; }
-.btn-search {
-  padding: var(--space-3) var(--space-6); background: #f5c84a; color: #1a1200;
-  border-radius: var(--radius-lg); font-weight: 600; font-size: var(--text-sm);
-  display: flex; align-items: center; gap: var(--space-2); white-space: nowrap;
-  flex-shrink: 0;
-}
-.btn-search:hover { background: #e8b82e; }
-.btn-search:active { background: #d4a420; }
+    .deal-card-title { font-size: 1.1rem; font-weight: 700; margin-bottom: 0.5rem; color: var(--text-main); display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+    
+    .deal-price-row { display: flex; align-items: baseline; gap: 0.75rem; margin-top: 1rem; }
+    .deal-price-now { font-size: 1.75rem; font-weight: 800; color: var(--text-main); }
+    .deal-price-was { text-decoration: line-through; color: var(--text-muted); font-size: 0.9rem; }
 
-.discount-pills { display: flex; gap: var(--space-2); flex-wrap: wrap; justify-content: center; }
-.discount-pill {
-  padding: var(--space-1) var(--space-3); border-radius: var(--radius-full);
-  font-size: var(--text-xs); font-weight: 600; cursor: pointer;
-  border: 1px solid oklch(from #f9f8f5 l c h / 0.3);
-  color: oklch(from #f9f8f5 l c h / 0.85); background: transparent;
-}
-.discount-pill:hover, .discount-pill.active {
-  background: #f5c84a; color: #1a1200; border-color: #f5c84a;
-}
+    .deal-card-footer { padding: 1.25rem; border-top: 1px solid #f3f4f6; display: flex; justify-content: space-between; align-items: center; }
+    .btn-claim { 
+      background: var(--primary); color: white; text-decoration: none; padding: 0.6rem 1.2rem; 
+      border-radius: 8px; font-weight: 600; font-size: 0.9rem; transition: background 0.2s;
+    }
+    .btn-claim:hover { background: var(--primary-dark); }
 
-/* ── MAIN LAYOUT ── */
-.main-layout {
-  max-width: var(--content-wide); margin-inline: auto;
-  padding: var(--space-6) var(--space-4);
-  display: grid; grid-template-columns: 260px 1fr; gap: var(--space-6);
-}
-@media (max-width: 768px) { .main-layout { grid-template-columns: 1fr; } }
-
-/* ── SIDEBAR ── */
-.sidebar { display: flex; flex-direction: column; gap: var(--space-4); }
-@media (max-width: 768px) { .sidebar { display: none; } .sidebar.open { display: flex; } }
-
-.filter-card {
-  background: var(--color-surface); border: 1px solid var(--color-border);
-  border-radius: var(--radius-xl); padding: var(--space-5); box-shadow: var(--shadow-sm);
-}
-.filter-card-title {
-  font-size: var(--text-sm); font-weight: 600; color: var(--color-text-muted);
-  text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: var(--space-4);
-  display: flex; align-items: center; gap: var(--space-2);
-}
-.filter-group { margin-bottom: var(--space-5); }
-.filter-group:last-child { margin-bottom: 0; }
-.filter-group-label {
-  font-size: var(--text-xs); font-weight: 600; color: var(--color-text-muted);
-  text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: var(--space-2);
-}
-.filter-option {
-  display: flex; align-items: center; gap: var(--space-2); padding: var(--space-2) var(--space-2);
-  border-radius: var(--radius-md); cursor: pointer; font-size: var(--text-sm);
-  color: var(--color-text); transition: background var(--transition-interactive);
-}
-.filter-option:hover { background: var(--color-surface-offset); }
-.filter-option input[type="checkbox"] { accent-color: var(--color-primary); width: 15px; height: 15px; }
-.filter-option.active-filter { background: var(--color-primary-highlight); font-weight: 500; }
-.filter-count { margin-left: auto; font-size: var(--text-xs); color: var(--color-text-muted); background: var(--color-surface-offset); padding: 1px 6px; border-radius: var(--radius-full); }
-
-.subcategory-list { padding-left: var(--space-4); border-left: 2px solid var(--color-border); margin-top: var(--space-1); }
-
-.distance-slider { width: 100%; accent-color: var(--color-primary); margin: var(--space-2) 0; }
-.distance-label { display: flex; justify-content: space-between; font-size: var(--text-xs); color: var(--color-text-muted); }
-
-/* ── RESULTS ── */
-.results-area { display: flex; flex-direction: column; gap: var(--space-4); }
-.results-header { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: var(--space-3); }
-.results-count { font-size: var(--text-sm); color: var(--color-text-muted); }
-.results-count strong { color: var(--color-text); font-weight: 600; }
-.results-sort { display: flex; align-items: center; gap: var(--space-2); font-size: var(--text-sm); }
-.sort-select {
-  padding: var(--space-1) var(--space-3); border: 1px solid var(--color-border);
-  border-radius: var(--radius-md); background: var(--color-surface); font-size: var(--text-sm);
-  color: var(--color-text); cursor: pointer;
-}
-.sort-select:focus { outline: 2px solid var(--color-primary); }
-.view-toggle { display: flex; gap: var(--space-1); }
-.view-btn { padding: var(--space-2); border-radius: var(--radius-md); color: var(--color-text-muted); display: flex; }
-.view-btn.active, .view-btn:hover { background: var(--color-primary-highlight); color: var(--color-primary); }
-
-/* ── FILTER CHIPS ── */
-.active-filters { display: flex; flex-wrap: wrap; gap: var(--space-2); align-items: center; }
-.chip {
-  display: inline-flex; align-items: center; gap: var(--space-1);
-  padding: var(--space-1) var(--space-3); border-radius: var(--radius-full);
-  font-size: var(--text-xs); font-weight: 500;
-  background: var(--color-primary-highlight); color: var(--color-primary);
-  border: 1px solid oklch(from var(--color-primary) l c h / 0.2);
-  cursor: pointer;
-}
-.chip:hover { background: var(--color-primary); color: var(--color-text-inverse); }
-.chip svg { width: 12px; height: 12px; }
-.clear-all { font-size: var(--text-xs); color: var(--color-notification); background: none; border: none; cursor: pointer; text-decoration: underline; }
-.clear-all:hover { color: oklch(from var(--color-notification) 0.35 0.18 27); }
-
-/* ── DEAL CARDS ── */
-.deals-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(min(290px, 100%), 1fr));
-  gap: var(--space-4);
-}
-.deals-list { display: flex; flex-direction: column; gap: var(--space-3); }
-
-.deal-card {
-  background: var(--color-surface); border: 1px solid var(--color-border);
-  border-radius: var(--radius-xl); overflow: hidden; box-shadow: var(--shadow-sm);
-  transition: box-shadow var(--transition-interactive), transform var(--transition-interactive);
-  cursor: pointer; display: flex; flex-direction: column;
-}
-.deal-card:hover { box-shadow: var(--shadow-md); transform: translateY(-2px); }
-.deal-card:active { transform: translateY(0); }
-
-.deal-card-img {
-  width: 100%; aspect-ratio: 16/9; object-fit: cover;
-  background: var(--color-surface-offset);
-}
-.deal-card-img-placeholder {
-  width: 100%; aspect-ratio: 16/9;
-  background: linear-gradient(135deg, var(--color-surface-offset) 0%, var(--color-surface-dynamic) 100%);
-  display: flex; align-items: center; justify-content: center;
-  color: var(--color-text-faint);
-}
-
-.deal-card-body { padding: var(--space-4); flex: 1; display: flex; flex-direction: column; gap: var(--space-2); }
-.deal-card-badges { display: flex; gap: var(--space-2); flex-wrap: wrap; align-items: center; }
-
-.badge-discount {
-  background: var(--color-notification); color: #fff;
-  padding: 2px var(--space-2); border-radius: var(--radius-full);
-  font-size: var(--text-xs); font-weight: 700; letter-spacing: 0.02em;
-}
-.badge-category {
-  background: var(--color-surface-offset); color: var(--color-text-muted);
-  padding: 2px var(--space-2); border-radius: var(--radius-full);
-  font-size: var(--text-xs); font-weight: 500;
-}
-.badge-hot {
-  background: var(--color-gold-highlight); color: var(--color-gold);
-  padding: 2px var(--space-2); border-radius: var(--radius-full);
-  font-size: var(--text-xs); font-weight: 600;
-}
-
-.deal-card-title { font-size: var(--text-sm); font-weight: 600; color: var(--color-text); line-height: 1.35; }
-.deal-card-store { font-size: var(--text-xs); color: var(--color-text-muted); display: flex; align-items: center; gap: var(--space-1); }
-.deal-price-row { display: flex; align-items: baseline; gap: var(--space-3); margin-top: auto; padding-top: var(--space-2); }
-.deal-price-now { font-size: var(--text-lg); font-weight: 700; color: var(--color-notification); font-variant-numeric: tabular-nums; }
-.deal-price-was { font-size: var(--text-xs); color: var(--color-text-faint); text-decoration: line-through; font-variant-numeric: tabular-nums; }
-.deal-card-footer {
-  border-top: 1px solid var(--color-divider);
-  padding: var(--space-3) var(--space-4);
-  display: flex; align-items: center; justify-content: space-between;
-  background: var(--color-surface-2);
-}
-.deal-distance { font-size: var(--text-xs); color: var(--color-text-muted); display: flex; align-items: center; gap: var(--space-1); }
-.btn-directions {
-  padding: var(--space-1) var(--space-3); border-radius: var(--radius-full);
-  font-size: var(--text-xs); font-weight: 600; color: var(--color-primary);
-  border: 1px solid var(--color-primary); background: transparent;
-}
-.btn-directions:hover { background: var(--color-primary); color: var(--color-text-inverse); }
-
-/* LIST VIEW CARD */
-.deal-card-list {
-  background: var(--color-surface); border: 1px solid var(--color-border);
-  border-radius: var(--radius-xl); overflow: hidden; box-shadow: var(--shadow-sm);
-  transition: box-shadow var(--transition-interactive);
-  cursor: pointer; display: grid;
-  grid-template-columns: 100px 1fr auto;
-  align-items: stretch;
-}
-@media (max-width: 480px) { .deal-card-list { grid-template-columns: 80px 1fr; } }
-.deal-card-list:hover { box-shadow: var(--shadow-md); }
-.deal-card-list .deal-card-img-placeholder { aspect-ratio: unset; min-height: 80px; height: 100%; border-radius: 0; }
-.deal-card-list .list-body { padding: var(--space-3) var(--space-4); display: flex; flex-direction: column; gap: var(--space-1); justify-content: center; }
-.deal-card-list .list-actions { padding: var(--space-3) var(--space-4); display: flex; flex-direction: column; align-items: flex-end; justify-content: center; gap: var(--space-2); border-left: 1px solid var(--color-divider); }
-@media (max-width: 480px) { .deal-card-list .list-actions { display: none; } }
-
-/* ── MODAL / DETAIL ── */
-.modal-overlay {
-  position: fixed; inset: 0; background: oklch(0.1 0 0 / 0.55);
-  z-index: 200; display: flex; align-items: center; justify-content: center;
-  padding: var(--space-4); opacity: 0; pointer-events: none;
-  transition: opacity var(--transition-interactive);
-}
-.modal-overlay.open { opacity: 1; pointer-events: all; }
-.modal {
-  background: var(--color-surface); border-radius: var(--radius-xl);
-  max-width: 560px; width: 100%; max-height: 90dvh; overflow-y: auto;
-  box-shadow: var(--shadow-lg);
-  transform: scale(0.95) translateY(16px);
-  transition: transform var(--transition-interactive);
-}
-.modal-overlay.open .modal { transform: scale(1) translateY(0); }
-.modal-header { padding: var(--space-5) var(--space-6) var(--space-4); border-bottom: 1px solid var(--color-divider); display: flex; align-items: flex-start; justify-content: space-between; gap: var(--space-4); }
-.modal-close { color: var(--color-text-muted); padding: var(--space-2); border-radius: var(--radius-md); margin-top: -4px; }
-.modal-close:hover { background: var(--color-surface-offset); color: var(--color-text); }
-.modal-body { padding: var(--space-5) var(--space-6); display: flex; flex-direction: column; gap: var(--space-4); }
-.modal-row { display: flex; align-items: flex-start; gap: var(--space-3); }
-.modal-icon { color: var(--color-primary); flex-shrink: 0; margin-top: 2px; }
-.modal-info-label { font-size: var(--text-xs); color: var(--color-text-muted); font-weight: 600; text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 2px; }
-.modal-info-val { font-size: var(--text-sm); color: var(--color-text); }
-.modal-footer { padding: var(--space-4) var(--space-6) var(--space-6); display: flex; gap: var(--space-3); }
-.btn-primary { padding: var(--space-3) var(--space-6); background: var(--color-primary); color: var(--color-text-inverse); border-radius: var(--radius-lg); font-size: var(--text-sm); font-weight: 600; flex: 1; text-align: center; }
-.btn-primary:hover { background: var(--color-primary-hover); }
-.btn-secondary { padding: var(--space-3) var(--space-4); border: 1px solid var(--color-border); background: var(--color-surface); color: var(--color-text); border-radius: var(--radius-lg); font-size: var(--text-sm); font-weight: 500; }
-.btn-secondary:hover { background: var(--color-surface-offset); }
-
-/* ── EMPTY STATE ── */
-.empty-state { display: flex; flex-direction: column; align-items: center; text-align: center; padding: var(--space-16) var(--space-8); color: var(--color-text-muted); }
-.empty-state-icon { width: 56px; height: 56px; margin-bottom: var(--space-4); color: var(--color-text-faint); }
-.empty-state h3 { color: var(--color-text); font-size: var(--text-lg); margin-bottom: var(--space-2); }
-.empty-state p { max-width: 38ch; margin-bottom: var(--space-6); }
-
-/* ── MOBILE FILTER TOGGLE ── */
-.mobile-filter-bar { display: none; align-items: center; gap: var(--space-2); padding: var(--space-3) var(--space-4); border-bottom: 1px solid var(--color-divider); background: var(--color-surface); }
-@media (max-width: 768px) { .mobile-filter-bar { display: flex; } }
-.btn-filter-toggle { display: flex; align-items: center; gap: var(--space-2); padding: var(--space-2) var(--space-4); border: 1px solid var(--color-border); border-radius: var(--radius-full); font-size: var(--text-sm); background: var(--color-surface); font-weight: 500; }
-.btn-filter-toggle:hover { background: var(--color-surface-offset); }
-
-/* ── PAGINATION ── */
-.pagination { display: flex; justify-content: center; gap: var(--space-2); padding-top: var(--space-4); }
-.page-btn { padding: var(--space-2) var(--space-4); border: 1px solid var(--color-border); border-radius: var(--radius-md); font-size: var(--text-sm); background: var(--color-surface); color: var(--color-text); }
-.page-btn:hover { background: var(--color-surface-offset); }
-.page-btn.active { background: var(--color-primary); color: var(--color-text-inverse); border-color: var(--color-primary); }
-.page-btn:disabled { opacity: 0.4; cursor: not-allowed; }
-
-/* ── MOBILE SIDEBAR OVERLAY ── */
-.mobile-sidebar-overlay { display: none; position: fixed; inset: 0; background: oklch(0.1 0 0 / 0.5); z-index: 150; }
-.mobile-sidebar-panel { position: fixed; left: 0; top: 0; bottom: 0; width: 290px; background: var(--color-surface); z-index: 160; overflow-y: auto; padding: var(--space-5) var(--space-4); box-shadow: var(--shadow-lg); transform: translateX(-100%); transition: transform var(--transition-interactive); }
-.mobile-sidebar-panel.open { transform: translateX(0); }
-.mobile-sidebar-overlay.open { display: block; }
-.mobile-sidebar-close { display: flex; align-items: center; justify-content: space-between; margin-bottom: var(--space-5); }
-.mobile-sidebar-close h2 { font-size: var(--text-lg); font-weight: 600; }
-</style>
+    @media (max-width: 900px) {
+      .container { grid-template-columns: 1fr; }
+      .sidebar { display: none; }
+    }
+  </style>
 </head>
 <body>
 
-<a href="#main-results" class="sr-only">Skip to results</a>
-
-<!-- HEADER -->
-<header class="header">
-  <div class="header-inner">
-    <a href="#" class="logo" aria-label="DealFinder Home">
-      <svg aria-hidden="true" width="28" height="28" viewBox="0 0 28 28" fill="none">
-        <rect width="28" height="28" rx="7" fill="var(--color-notification)"/>
-        <path d="M7 14 L14 7 L21 14 L14 21 Z" fill="white" opacity="0.9"/>
-        <circle cx="14" cy="14" r="3.5" fill="var(--color-notification)"/>
-        <circle cx="14" cy="14" r="2" fill="white"/>
-        <path d="M17 8 L20 8 L20 11" stroke="white" stroke-width="1.5" stroke-linecap="round"/>
-      </svg>
-      <span class="logo-text">Deal<span>Finder</span></span>
-    </a>
-    <p class="header-tagline">Local markdowns 75–99% off retail</p>
-    <div class="header-actions">
-      <button class="btn-icon" data-theme-toggle aria-label="Switch theme">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
-      </button>
-    </div>
+<nav class="nav-header">
+  <div class="logo">DEALFINDER.PRO</div>
+  <div class="user-controls">
+    <button class="filter-chip">My Alerts</button>
   </div>
-</header>
+</nav>
 
-<!-- HERO SEARCH -->
-<section class="hero" aria-label="Search for deals">
-  <p class="hero-eyebrow">🏷️ Deep Discount Finder</p>
-  <h1 class="hero-heading">Find Local Deals <em>75–99% Off</em></h1>
-  <p class="hero-sub">Search retailers near any zip code for extreme markdowns on clothing, electronics, home goods, and more.</p>
-
-  <div class="search-bar" role="search">
-    <div class="search-row">
-      <div class="search-input-wrap">
-        <svg class="search-input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
-        <input id="keyword-search" type="search" class="search-input" placeholder="Search products, brands, stores…" aria-label="Search keywords" autocomplete="off">
+<main class="container">
+  <!-- Filters Sidebar -->
+  <aside class="sidebar">
+    <div class="filter-group">
+      <h3 class="filter-title">Price Range</h3>
+      <div class="chip-container">
+        <button class="filter-chip active">All</button>
+        <button class="filter-chip">Under $25</button>
+        <button class="filter-chip">$25 - $100</button>
+        <button class="filter-chip">$100+</button>
       </div>
-      <div class="search-input-wrap" style="position:relative; flex:0 0 auto;">
-        <svg class="search-input-icon" style="left:var(--space-3)" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-        <input id="zip-search" type="text" class="zip-input" placeholder="ZIP code" maxlength="5" aria-label="ZIP code" inputmode="numeric">
-      </div>
-      <button class="btn-search" id="search-btn" aria-label="Search">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
-        Search
-      </button>
     </div>
-    <div class="discount-pills" role="group" aria-label="Filter by discount range">
-      <span style="font-size:var(--text-xs);color:oklch(from #f9f8f5 l c h / 0.7);align-self:center;">Discount:</span>
-      <button class="discount-pill active" data-min="75" data-max="100">75%+</button>
-      <button class="discount-pill" data-min="80" data-max="100">80%+</button>
-      <button class="discount-pill" data-min="90" data-max="100">90%+</button>
-      <button class="discount-pill" data-min="95" data-max="100">95%+</button>
-      <button class="discount-pill" data-min="99" data-max="100">99%</button>
+    
+    <div class="filter-group">
+      <h3 class="filter-title">Categories</h3>
+      <div class="chip-container">
+        <button class="filter-chip active">Tech</button>
+        <button class="filter-chip">Home</button>
+        <button class="filter-chip">Fashion</button>
+        <button class="filter-chip">Groceries</button>
+      </div>
     </div>
-  </div>
-</section>
+  </aside>
 
-<!-- MOBILE FILTER BAR -->
-<div class="mobile-filter-bar">
-  <button class="btn-filter-toggle" id="mobile-filter-btn" aria-expanded="false" aria-controls="mobile-sidebar">
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/></svg>
-    Filters
-  </button>
-  <div class="active-filters" id="active-filters-mobile" aria-live="polite"></div>
-</div>
+  <!-- Main Content -->
+  <section class="content">
+    <div class="search-wrapper">
+      <input type="text" class="search-input" placeholder="Search 1,000+ local clearance items...">
+    </div>
 
-<!-- MAIN -->
-<main id="main-results">
-  <div class="main-layout">
-
-    <!-- DESKTOP SIDEBAR -->
-    <aside class="sidebar" aria-label="Filters">
-      <div class="filter-card">
-        <div class="filter-card-title">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/></svg>
-          Filters
-        </div>
-
-        <!-- Distance -->
-        <div class="filter-group">
-          <div class="filter-group-label">Distance from ZIP</div>
-          <input type="range" class="distance-slider" id="distance-slider" min="1" max="50" value="25" aria-label="Max distance in miles">
-          <div class="distance-label"><span>1 mi</span><span id="distance-val">25 mi</span><span>50 mi</span></div>
-        </div>
-
-        <!-- Categories -->
-        <div class="filter-group">
-          <div class="filter-group-label">Category</div>
-          <div id="category-list"></div>
-        </div>
-      </div>
-
-      <!-- Subcategory card (populates dynamically) -->
-      <div class="filter-card" id="subcategory-card" style="display:none;">
-        <div class="filter-card-title">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>
-          Subcategory
-        </div>
-        <div id="subcategory-list"></div>
-      </div>
-
-      <!-- Store type -->
-      <div class="filter-card">
-        <div class="filter-card-title">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m2 7 4.41-4.41A2 2 0 0 1 7.83 2h8.34a2 2 0 0 1 1.42.59L22 7"/><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><path d="M15 22v-4a2 2 0 0 0-2-2h-2a2 2 0 0 0-2 2v4"/><path d="M2 7h20"/><path d="M22 7v3a2 2 0 0 1-2 2a2.7 2.7 0 0 1-1.59-.63.7.7 0 0 0-.82 0A2.7 2.7 0 0 1 16 12a2.7 2.7 0 0 1-1.59-.63.7.7 0 0 0-.82 0A2.7 2.7 0 0 1 12 12a2.7 2.7 0 0 1-1.59-.63.7.7 0 0 0-.82 0A2.7 2.7 0 0 1 8 12a2.7 2.7 0 0 1-1.59-.63.7.7 0 0 0-.82 0A2.7 2.7 0 0 1 4 12a2 2 0 0 1-2-2V7"/></svg>
-          Store Type
-        </div>
-        <div id="store-type-list"></div>
-      </div>
-    </aside>
-
-    <!-- RESULTS COLUMN -->
-    <section aria-labelledby="results-heading">
-      <!-- Results header -->
-      <div class="results-area">
-        <div class="results-header">
-          <div>
-            <h2 id="results-heading" class="sr-only">Deal results</h2>
-            <p class="results-count" id="results-count" aria-live="polite"><strong>0</strong> deals found</p>
-            <div class="active-filters" id="active-filters-desktop" style="margin-top:var(--space-2);" aria-live="polite"></div>
+    <div id="deals-output" class="deals-grid">
+      
+      <!-- Sony Deal -->
+      <article class="deal-card">
+        <img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&q=80&w=600" alt="Headphones" class="deal-card-img">
+        <div class="deal-card-body">
+          <div class="deal-card-badges">
+            <span class="badge badge-discount">90% OFF</span>
+            <span class="badge badge-category">Electronics</span>
           </div>
-          <div class="results-sort">
-            <label for="sort-select" class="sr-only">Sort by</label>
-            <select class="sort-select" id="sort-select">
-              <option value="discount">Highest Discount</option>
-              <option value="price-low">Price: Low to High</option>
-              <option value="price-high">Price: High to Low</option>
-              <option value="distance">Nearest</option>
-              <option value="newest">Newest</option>
-            </select>
-            <div class="view-toggle" role="group" aria-label="View mode">
-              <button class="view-btn active" id="grid-view-btn" aria-label="Grid view" aria-pressed="true">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect width="7" height="7" x="3" y="3" rx="1"/><rect width="7" height="7" x="14" y="3" rx="1"/><rect width="7" height="7" x="14" y="14" rx="1"/><rect width="7" height="7" x="3" y="14" rx="1"/></svg>
-              </button>
-              <button class="view-btn" id="list-view-btn" aria-label="List view" aria-pressed="false">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><line x1="8" x2="21" y1="6" y2="6"/><line x1="8" x2="21" y1="12" y2="12"/><line x1="8" x2="21" y1="18" y2="18"/><line x1="3" x2="3.01" y1="6" y2="6"/><line x1="3" x2="3.01" y1="12" y2="12"/><line x1="3" x2="3.01" y1="18" y2="18"/></svg>
-              </button>
-            </div>
+          <h3 class="deal-card-title">Sony WH-1000XM4 Wireless Noise Cancelling Headphones</h3>
+          <div class="deal-price-row">
+            <span class="deal-price-now">$34.99</span>
+            <span class="deal-price-was">$349.99</span>
           </div>
         </div>
+        <div class="deal-card-footer">
+          <span style="font-size: 0.8rem; color: #059669; font-weight: 600;">● In Stock</span>
+          <a href="https://www.sony.com" target="_blank" class="btn-claim">Snag Deal</a>
+        </div>
+      </article>
 
-        <!-- Deals output -->
-        <div id="deals-output" class="deals-grid" aria-live="polite" aria-label="Deal listings"></div>
+      <!-- KitchenAid Deal -->
+      <article class="deal-card">
+        <img src="https://images.unsplash.com/photo-1594385208974-2e75f9d8ad48?auto=format&fit=crop&q=80&w=600" alt="Mixer" class="deal-card-img">
+        <div class="deal-card-body">
+          <div class="deal-card-badges">
+            <span class="badge badge-discount">75% OFF</span>
+            <span class="badge badge-category">Kitchen</span>
+          </div>
+          <h3 class="deal-card-title">KitchenAid Artisan Series 5-Quart Stand Mixer</h3>
+          <div class="deal-price-row">
+            <span class="deal-price-now">$112.49</span>
+            <span class="deal-price-was">$449.99</span>
+          </div>
+        </div>
+        <div class="deal-card-footer">
+          <span style="font-size: 0.8rem; color: #d97706; font-weight: 600;">⚠ Low Stock</span>
+          <a href="https://www.kitchenaid.com" target="_blank" class="btn-claim">Snag Deal</a>
+        </div>
+      </article>
 
-        <!-- Pagination -->
-        <nav class="pagination" id="pagination" aria-label="Results pages"></nav>
-      </div>
-    </section>
-  </div>
+      <!-- Nike Deal -->
+      <article class="deal-card">
+        <img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&q=80&w=600" alt="Sneakers" class="deal-card-img">
+        <div class="deal-card-body">
+          <div class="deal-card-badges">
+            <span class="badge badge-discount">85% OFF</span>
+            <span class="badge badge-category">Apparel</span>
+          </div>
+          <h3 class="deal-card-title">Nike Air Max 270 - Triple Black Edition</h3>
+          <div class="deal-price-row">
+            <span class="deal-price-now">$24.00</span>
+            <span class="deal-price-was">$160.00</span>
+          </div>
+        </div>
+        <div class="deal-card-footer">
+          <span style="font-size: 0.8rem; color: #059669; font-weight: 600;">● In Stock</span>
+          <a href="https://www.nike.com" target="_blank" class="btn-claim">Snag Deal</a>
+        </div>
+      </article>
+
+    </div>
+  </section>
 </main>
 
-<!-- MOBILE SIDEBAR PANEL -->
-<div class="mobile-sidebar-overlay" id="mobile-overlay" aria-hidden="true"></div>
-<div class="mobile-sidebar-panel" id="mobile-sidebar" role="dialog" aria-modal="true" aria-label="Filters" aria-hidden="true">
-  <div class="mobile-sidebar-close">
-    <h2>Filters</h2>
-    <button id="mobile-close-btn" class="btn-icon" aria-label="Close filters">
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg>
-    </button>
-  </div>
-  <div id="mobile-sidebar-content"></div>
-</div>
-
-<!-- DEAL DETAIL MODAL -->
-<div class="modal-overlay" id="deal-modal" role="dialog" aria-modal="true" aria-labelledby="modal-title" aria-hidden="true">
-  <div class="modal" id="modal-inner">
-    <div class="modal-header">
-      <div>
-        <div id="modal-badges" style="display:flex;gap:var(--space-2);flex-wrap:wrap;margin-bottom:var(--space-2);"></div>
-        <h2 id="modal-title" style="font-size:var(--text-lg);font-weight:600;line-height:1.3;"></h2>
-      </div>
-      <button class="modal-close" id="modal-close-btn" aria-label="Close">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg>
-      </button>
-    </div>
-    <div class="modal-body" id="modal-body"></div>
-    <div class="modal-footer" id="modal-footer"></div>
-  </div>
-</div>
-
-<script>
-// ── DATA ──
-const CATEGORIES = {
-  "Clothing & Apparel": {
-    icon: "shirt",
-    subcategories: ["Women's Clothing","Men's Clothing","Kids & Baby","Footwear","Accessories","Activewear","Outerwear"]
-  },
-  "Electronics": {
-    icon: "monitor",
-    subcategories: ["Phones & Tablets","Laptops & Computers","Audio & Headphones","Cameras","TVs & Displays","Gaming","Smart Home","Cables & Accessories"]
-  },
-  "Home & Garden": {
-    icon: "home",
-    subcategories: ["Furniture","Bedding & Bath","Kitchen & Dining","Storage","Decor","Garden & Outdoor","Lighting","Tools"]
-  },
-  "Sports & Outdoors": {
-    icon: "bike",
-    subcategories: ["Exercise Equipment","Camping & Hiking","Team Sports","Water Sports","Cycling","Fishing","Hunting"]
-  },
-  "Beauty & Health": {
-    icon: "heart",
-    subcategories: ["Skincare","Haircare","Makeup","Fragrances","Vitamins & Supplements","Personal Care","Medical Equipment"]
-  },
-  "Toys & Games": {
-    icon: "gamepad-2",
-    subcategories: ["Action Figures","Board Games","Outdoor Play","Building Toys","Video Games","Educational","Dolls"]
-  },
-  "Automotive": {
-    icon: "car",
-    subcategories: ["Parts & Accessories","Car Electronics","Cleaning & Detailing","Tools","Tires & Wheels"]
-  },
-  "Books & Media": {
-    icon: "book-open",
-    subcategories: ["Books","Movies & TV","Music","Video Games","Collectibles"]
-  }
-};
-
-const STORE_TYPES = ["Department Store","Outlet Store","Thrift / Resale","Liquidation Store","Warehouse Club","Specialty Retailer","Consignment Shop","Flash Sale Event"];
-
-const RETAILER_NAMES = [
-  "Burlington Coat Factory","TJ Maxx","Marshalls","Big Lots","Tuesday Morning","Ollie's Bargain Outlet",
-  "Dirt Cheap","Deals","Savers","Goodwill","Habitat ReStore","Ross Dress for Less",
-  "Value Village","HomeGoods","Five Below","99 Cents Only","Dollar Tree","Salvation Army"
-];
-
-const PRODUCT_NAMES = {
-  "Clothing & Apparel": ["Calvin Klein Blazer Set","Nike Air Zoom Running Shoes","Levi's Denim Jacket","Tommy Hilfiger Polo Shirt","Under Armour Leggings","North Face Puffer Vest","Vera Wang Evening Gown","Ralph Lauren Oxford Shirt","Champion Hoodie","Kate Spade Tote Bag"],
-  /* FIXED: Escaped the quotes around 65" to prevent script from breaking */
-  "Electronics": ["Sony WH-1000XM5 Headphones","iPad Mini 6th Gen","Samsung 65\" QLED TV","Bose SoundLink Speaker","Laptop Dell Inspiron 15","GoPro Hero 12 Camera","Ring Video Doorbell","Nest Thermostat","JBL Charge 5 Speaker","Apple Watch Series 8"],
-  "Home & Garden": ["Instant Pot Duo 7-in-1","KitchenAid Stand Mixer","Dyson V15 Vacuum","Shark Robot Vacuum","Cuisinart Coffee Maker","Breville Espresso Machine","Tempur-Pedic Pillow Set","Pottery Barn Throw Blanket","Weber Gas Grill","Milwaukee Power Drill"],
-  "Sports & Outdoors": ["Peloton Cycling Shoes","Columbia Rain Jacket","Trek Bike Helmet","Hydro Flask 32oz","REI Co-op Sleeping Bag","Titleist Golf Club Set","TaylorMade Driver","Callaway Golf Bag","Wilson Tennis Racket","Yeti Cooler 65"],
-  "Beauty & Health": ["Dyson Airwrap Styler","NuFACE Facial Toning Device","La Mer Face Cream","Tatcha Skincare Set","Kiehl's Moisturizer","Elemis Cleansing Balm","Charlotte Tilbury Palette","NARS Foundation","Clinique Bonus Set","Estée Lauder Night Serum"],
-  "Toys & Games": ["LEGO Technic Set","Nintendo Switch Bundle","Barbie Dream House","Hot Wheels Track Set","Hasbro Monopoly Deluxe","Play-Doh Super Kit","Nerf Elite Blaster","Fisher-Price Smart Activity Table","Crayola Art Set","K'NEX Building Set"],
-  "Automotive": ["Garmin GPS Navigator","Thule Roof Rack","WeatherTech Floor Mats","Craftsman Socket Set","AutoVox Dash Cam","Michelin Tire Set","Optima Car Battery","Turtle Wax Detail Kit","Armor All Interior Kit","Pep Boys Floor Jack"],
-  "Books & Media": ["Complete Harry Potter Box Set","National Geographic Atlas","Criterion Collection Blu-Ray","Vinyl Record Collection","NYT Bestseller Bundle","Coffee Table Art Book","Audiobook Library Pack","Puzzle 2000 Pieces","Board Game Collector Set","Chess Premium Set"]
-};
-
-const ZIP_CITIES = {"29303":"Spartanburg, SC","29301":"Spartanburg, SC","29302":"Spartanburg, SC","10001":"New York, NY","90210":"Beverly Hills, CA","60601":"Chicago, IL","77001":"Houston, TX","30301":"Atlanta, GA","85001":"Phoenix, AZ","98101":"Seattle, WA","33101":"Miami, FL","75201":"Dallas, TX"};
-
-function rand(min, max) { return Math.floor(Math.random() * (max - min + 1)) + min; }
-function pick(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
-
-function generateDeals(count = 48) {
-  const deals = [];
-  const cats = Object.keys(CATEGORIES);
-  for (let i = 0; i < count; i++) {
-    const cat = pick(cats);
-    const sub = pick(CATEGORIES[cat].subcategories);
-    const origPrice = rand(40, 1200);
-    const discountPct = rand(75, 99);
-    const salePrice = +(origPrice * (1 - discountPct / 100)).toFixed(2);
-    const storeType = pick(STORE_TYPES);
-    const storeName = pick(RETAILER_NAMES);
-    const productList = PRODUCT_NAMES[cat];
-    const prodName = pick(productList);
-    const distance = +(Math.random() * 24 + 0.5).toFixed(1);
-    const catIcon = CATEGORIES[cat].icon;
-    const street = rand(100, 9999) + " " + pick(["Main St","Oak Ave","Commerce Dr","Mall Blvd","Market Ln","Retail Row","Center Dr"]);
-    deals.push({
-      id: i + 1,
-      title: prodName,
-      category: cat,
-      subcategory: sub,
-      storeType,
-      storeName,
-      origPrice,
-      salePrice,
-      discountPct,
-      distance,
-      catIcon,
-      street,
-      city: "Spartanburg, SC",
-      phone: `(864) ${rand(200,999)}-${rand(1000,9999)}`,
-      hours: pick(["Mon–Sat 9am–9pm, Sun 11am–7pm","Mon–Sun 8am–10pm","Tue–Sun 10am–6pm","Mon–Fri 9am–8pm, Sat–Sun 10am–7pm"]),
-      isHot: Math.random() < 0.15,
-      daysLeft: rand(1, 14),
-      qty: rand(1, 20)
-    });
-  }
-  return deals;
-}
-
-// ── STATE ──
-// FIXED: Generate deals once on load to ensure keyword matches persist across search clicks
-let allDeals = generateDeals(120); 
-let filteredDeals = [...allDeals];
-let currentPage = 1;
-const PAGE_SIZE = 12;
-let viewMode = "grid";
-let activeCategories = new Set();
-let activeSubcategories = new Set();
-let activeStoreTypes = new Set();
-let discountMin = 75;
-let discountMax = 100;
-let maxDistance = 25;
-let keyword = "";
-let currentZip = "29303";
-let sortBy = "discount";
-
-// ── DOM ──
-const dealsOutput = document.getElementById("deals-output");
-const resultsCount = document.getElementById("results-count");
-const paginationEl = document.getElementById("pagination");
-const categoryList = document.getElementById("category-list");
-const subcategoryCard = document.getElementById("subcategory-card");
-const subcategoryList = document.getElementById("subcategory-list");
-const storeTypeList = document.getElementById("store-type-list");
-const distanceSlider = document.getElementById("distance-slider");
-const distanceVal = document.getElementById("distance-val");
-const keywordInput = document.getElementById("keyword-search");
-const zipInput = document.getElementById("zip-search");
-const searchBtn = document.getElementById("search-btn");
-const sortSelect = document.getElementById("sort-select");
-const activeFiltersDesktop = document.getElementById("active-filters-desktop");
-const activeFiltersMobile = document.getElementById("active-filters-mobile");
-const modal = document.getElementById("deal-modal");
-const modalTitle = document.getElementById("modal-title");
-const modalBadges = document.getElementById("modal-badges");
-const modalBody = document.getElementById("modal-body");
-const modalFooter = document.getElementById("modal-footer");
-
-// ── THEME TOGGLE ──
-(function(){
-  const t=document.querySelector('[data-theme-toggle]'),r=document.documentElement;
-  let d=matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light';
-  r.setAttribute('data-theme',d);
-  t&&t.addEventListener('click',()=>{
-    d=d==='dark'?'light':'dark';
-    r.setAttribute('data-theme',d);
-    t.setAttribute('aria-label','Switch to '+(d==='dark'?'light':'dark')+' mode');
-    t.innerHTML=d==='dark'
-      ?'<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>'
-      :'<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>';
-  });
-})();
-
-// ── BUILD SIDEBAR ──
-function buildCategoryList() {
-  const cats = Object.keys(CATEGORIES);
-  categoryList.innerHTML = cats.map(cat => {
-    const count = allDeals.filter(d => d.category === cat).length;
-    return `
-      <label class="filter-option ${activeCategories.has(cat) ? 'active-filter' : ''}">
-        <input type="checkbox" ${activeCategories.has(cat) ? 'checked' : ''} data-cat="${cat}" class="cat-checkbox">
-        <span>${cat}</span>
-        <span class="filter-count">${count}</span>
-      </label>`;
-  }).join("");
-
-  categoryList.querySelectorAll(".cat-checkbox").forEach(cb => {
-    cb.addEventListener("change", () => {
-      const cat = cb.dataset.cat;
-      if (cb.checked) activeCategories.add(cat);
-      else { activeCategories.delete(cat); CATEGORIES[cat].subcategories.forEach(s => activeSubcategories.delete(s)); }
-      buildSubcategoryList();
-      applyFilters();
-      buildCategoryList();
-    });
-  });
-}
-
-function buildSubcategoryList() {
-  if (activeCategories.size === 0) {
-    subcategoryCard.style.display = "none";
-    return;
-  }
-  subcategoryCard.style.display = "block";
-  let allSubs = [];
-  activeCategories.forEach(cat => allSubs.push(...CATEGORIES[cat].subcategories));
-  subcategoryList.innerHTML = allSubs.map(sub => {
-    const count = allDeals.filter(d => d.subcategory === sub).length;
-    return `
-      <label class="filter-option ${activeSubcategories.has(sub) ? 'active-filter' : ''}">
-        <input type="checkbox" ${activeSubcategories.has(sub) ? 'checked' : ''} data-sub="${sub}" class="sub-checkbox">
-        <span>${sub}</span>
-        <span class="filter-count">${count}</span>
-      </label>`;
-  }).join("");
-  subcategoryList.querySelectorAll(".sub-checkbox").forEach(cb => {
-    cb.addEventListener("change", () => {
-      if (cb.checked) activeSubcategories.add(cb.dataset.sub);
-      else activeSubcategories.delete(cb.dataset.sub);
-      applyFilters();
-      buildSubcategoryList();
-    });
-  });
-}
-
-function buildStoreTypeList() {
-  storeTypeList.innerHTML = STORE_TYPES.map(st => {
-    const count = allDeals.filter(d => d.storeType === st).length;
-    return `
-      <label class="filter-option ${activeStoreTypes.has(st) ? 'active-filter' : ''}">
-        <input type="checkbox" ${activeStoreTypes.has(st) ? 'checked' : ''} data-st="${st}" class="st-checkbox">
-        <span>${st}</span>
-        <span class="filter-count">${count}</span>
-      </label>`;
-  }).join("");
-  storeTypeList.querySelectorAll(".st-checkbox").forEach(cb => {
-    cb.addEventListener("change", () => {
-      if (cb.checked) activeStoreTypes.add(cb.dataset.st);
-      else activeStoreTypes.delete(cb.dataset.st);
-      applyFilters();
-      buildStoreTypeList();
-    });
-  });
-}
-
-// ── FILTER LOGIC ──
-function applyFilters() {
-  filteredDeals = allDeals.filter(d => {
-    if (d.discountPct < discountMin) return false;
-    if (activeCategories.size > 0 && !activeCategories.has(d.category)) return false;
-    if (activeSubcategories.size > 0 && !activeSubcategories.has(d.subcategory)) return false;
-    if (activeStoreTypes.size > 0 && !activeStoreTypes.has(d.storeType)) return false;
-    if (d.distance > maxDistance) return false;
-    if (keyword) {
-      const kw = keyword.toLowerCase();
-      if (!d.title.toLowerCase().includes(kw) &&
-          !d.storeName.toLowerCase().includes(kw) &&
-          !d.category.toLowerCase().includes(kw) &&
-          !d.subcategory.toLowerCase().includes(kw) &&
-          !d.storeType.toLowerCase().includes(kw)) return false;
-    }
-    return true;
-  });
-
-  // Sort
-  filteredDeals.sort((a, b) => {
-    if (sortBy === "discount") return b.discountPct - a.discountPct;
-    if (sortBy === "price-low") return a.salePrice - b.salePrice;
-    if (sortBy === "price-high") return b.salePrice - a.salePrice;
-    if (sortBy === "distance") return a.distance - b.distance;
-    if (sortBy === "newest") return b.id - a.id;
-    return 0;
-  });
-
-  currentPage = 1;
-  renderResults();
-  renderActiveFilters();
-}
-
-// ── RENDER ──
-function renderResults() {
-  const start = (currentPage - 1) * PAGE_SIZE;
-  const page = filteredDeals.slice(start, start + PAGE_SIZE);
-
-  resultsCount.innerHTML = `<strong>${filteredDeals.length.toLocaleString()}</strong> deal${filteredDeals.length !== 1 ? 's' : ''} found${currentZip ? ' near <strong>' + (ZIP_CITIES[currentZip] || currentZip) + '</strong>' : ''}`;
-
-  if (filteredDeals.length === 0) {
-    dealsOutput.className = "";
-    dealsOutput.innerHTML = `
-      <div class="empty-state" style="grid-column:1/-1">
-        <div class="empty-state-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="56" height="56"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/><path d="M8 11h6M11 8v6" stroke-dasharray="2 2"/></svg></div>
-        <h3>No deals found</h3>
-        <p>Try adjusting your filters, expanding your search radius, or using a different keyword.</p>
-        <button class="btn-primary" onclick="clearAllFilters()" style="flex:0 0 auto;max-width:200px;">Clear All Filters</button>
-      </div>`;
-    paginationEl.innerHTML = "";
-    return;
-  }
-
-  dealsOutput.className = viewMode === "grid" ? "deals-grid" : "deals-list";
-  dealsOutput.innerHTML = page.map(d => viewMode === "grid" ? renderGridCard(d) : renderListCard(d)).join("");
-
-  dealsOutput.querySelectorAll("[data-deal-id]").forEach(el => {
-    el.addEventListener("click", () => openDealModal(+el.dataset.dealId));
-    el.addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); openDealModal(+el.dataset.dealId); }});
-  });
-
-  renderPagination();
-}
-
-function discountColor(pct) {
-  if (pct >= 95) return "#b8212f";
-  if (pct >= 85) return "#d14900";
-  return "#a12c7b";
-}
-
-function renderGridCard(d) {
-  return `
-    <article class="deal-card" data-deal-id="${d.id}" tabindex="0" role="button" aria-label="View deal: ${d.title} at ${d.discountPct}% off">
-      <div class="deal-card-img-placeholder" aria-hidden="true">
-        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" opacity="0.4"><use href="#icon-${d.catIcon}"/></svg>
-      </div>
-      <div class="deal-card-body">
-        <div class="deal-card-badges">
-          <span class="badge-discount" style="background:${discountColor(d.discountPct)}">${d.discountPct}% OFF</span>
-          ${d.isHot ? '<span class="badge-hot">🔥 HOT</span>' : ''}
-          <span class="badge-category">${d.subcategory}</span>
-        </div>
-        <p class="deal-card-title">${d.title}</p>
-        <p class="deal-card-store">
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m2 7 4.41-4.41A2 2 0 0 1 7.83 2h8.34a2 2 0 0 1 1.42.59L22 7"/><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/></svg>
-          ${d.storeName}
-        </p>
-        <div class="deal-price-row">
-          <span class="deal-price-now">$${d.salePrice.toFixed(2)}</span>
-          <span class="deal-price-was">was $${d.origPrice.toFixed(2)}</span>
-        </div>
-      </div>
-      <div class="deal-card-footer">
-        <span class="deal-distance">
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-          ${d.distance} mi away
-        </span>
-        <button class="btn-directions" aria-label="Get directions to ${d.storeName}">Directions</button>
-      </div>
-    </article>`;
-}
-
-function renderListCard(d) {
-  return `
-    <article class="deal-card-list" data-deal-id="${d.id}" tabindex="0" role="button" aria-label="View deal: ${d.title} at ${d.discountPct}% off">
-      <div class="deal-card-img-placeholder" aria-hidden="true">
-        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" opacity="0.35"><use href="#icon-${d.catIcon}"/></svg>
-      </div>
-      <div class="list-body">
-        <div class="deal-card-badges">
-          <span class="badge-discount" style="background:${discountColor(d.discountPct)}">${d.discountPct}% OFF</span>
-          ${d.isHot ? '<span class="badge-hot">🔥</span>' : ''}
-          <span class="badge-category">${d.subcategory}</span>
-        </div>
-        <p class="deal-card-title">${d.title}</p>
-        <p class="deal-card-store">
-          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m2 7 4.41-4.41A2 2 0 0 1 7.83 2h8.34a2 2 0 0 1 1.42.59L22 7"/><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/></svg>
-          ${d.storeName} · ${d.distance} mi
-        </p>
-      </div>
-      <div class="list-actions">
-        <span class="deal-price-now" style="font-size:var(--text-base)">$${d.salePrice.toFixed(2)}</span>
-        <span class="deal-price-was" style="font-size:var(--text-xs)">was $${d.origPrice.toFixed(2)}</span>
-      </div>
-    </article>`;
-}
-
-function renderPagination() {
-  const totalPages = Math.ceil(filteredDeals.length / PAGE_SIZE);
-  if (totalPages <= 1) { paginationEl.innerHTML = ""; return; }
-  let html = `<button class="page-btn" onclick="goPage(${currentPage - 1})" ${currentPage === 1 ? 'disabled' : ''} aria-label="Previous page">‹ Prev</button>`;
-  for (let p = 1; p <= totalPages; p++) {
-    if (p === 1 || p === totalPages || Math.abs(p - currentPage) <= 2) {
-      html += `<button class="page-btn ${p === currentPage ? 'active' : ''}" onclick="goPage(${p})" aria-label="Page ${p}" aria-current="${p === currentPage ? 'page' : 'false'}">${p}</button>`;
-    } else if (Math.abs(p - currentPage) === 3) {
-      html += `<span style="padding:var(--space-2);color:var(--color-text-muted);">…</span>`;
-    }
-  }
-  html += `<button class="page-btn" onclick="goPage(${currentPage + 1})" ${currentPage === totalPages ? 'disabled' : ''} aria-label="Next page">Next ›</button>`;
-  paginationEl.innerHTML = html;
-}
-
-function goPage(p) {
-  const totalPages = Math.ceil(filteredDeals.length / PAGE_SIZE);
-  if (p < 1 || p > totalPages) return;
-  currentPage = p;
-  renderResults();
-  document.getElementById("main-results").scrollIntoView({ behavior: "smooth" });
-}
-
-// ── ACTIVE FILTER CHIPS ──
-function renderActiveFilters() {
-  const chips = [];
-  if (discountMin > 75) chips.push({ label: `≥${discountMin}% off`, clear: () => { discountMin = 75; document.querySelectorAll('.discount-pill').forEach(p => p.classList.remove('active')); document.querySelector('.discount-pill[data-min="75"]').classList.add('active'); applyFilters(); }});
-  if (keyword) chips.push({ label: `"${keyword}"`, clear: () => { keyword = ""; keywordInput.value = ""; applyFilters(); }});
-  if (maxDistance < 25) chips.push({ label: `≤${maxDistance} mi`, clear: () => { maxDistance = 25; distanceSlider.value = 25; distanceVal.textContent = "25 mi"; applyFilters(); }});
-  activeCategories.forEach(cat => chips.push({ label: cat, clear: () => { activeCategories.delete(cat); CATEGORIES[cat].subcategories.forEach(s => activeSubcategories.delete(s)); buildCategoryList(); buildSubcategoryList(); applyFilters(); }}));
-  activeSubcategories.forEach(sub => chips.push({ label: sub, clear: () => { activeSubcategories.delete(sub); buildSubcategoryList(); applyFilters(); }}));
-  activeStoreTypes.forEach(st => chips.push({ label: st, clear: () => { activeStoreTypes.delete(st); buildStoreTypeList(); applyFilters(); }}));
-
-  const render = chips.map((c, i) => `
-    <button class="chip" data-chip="${i}" aria-label="Remove filter: ${c.label}">
-      ${c.label}
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg>
-    </button>`).join("") + (chips.length > 1 ? `<button class="clear-all" onclick="clearAllFilters()">Clear all</button>` : "");
-
-  activeFiltersDesktop.innerHTML = render;
-  activeFiltersMobile.innerHTML = chips.length ? render : "";
-
-  activeFiltersDesktop.querySelectorAll(".chip").forEach((el, i) => el.addEventListener("click", chips[i].clear));
-  activeFiltersMobile.querySelectorAll(".chip").forEach((el, i) => el.addEventListener("click", chips[i].clear));
-}
-
-function clearAllFilters() {
-  activeCategories.clear(); activeSubcategories.clear(); activeStoreTypes.clear();
-  discountMin = 75; keyword = ""; maxDistance = 25;
-  keywordInput.value = ""; distanceSlider.value = 25; distanceVal.textContent = "25 mi";
-  document.querySelectorAll('.discount-pill').forEach(p => p.classList.remove('active'));
-  document.querySelector('.discount-pill[data-min="75"]').classList.add('active');
-  buildCategoryList(); buildSubcategoryList(); buildStoreTypeList();
-  applyFilters();
-}
-
-// ── DEAL MODAL ──
-function openDealModal(id) {
-  const d = allDeals.find(x => x.id === id);
-  if (!d) return;
-  modalTitle.textContent = d.title;
-  modalBadges.innerHTML = `
-    <span class="badge-discount" style="background:${discountColor(d.discountPct)};padding:3px 10px;font-size:var(--text-sm)">${d.discountPct}% OFF</span>
-    <span class="badge-category" style="font-size:var(--text-xs)">${d.category}</span>
-    ${d.isHot ? '<span class="badge-hot" style="font-size:var(--text-xs)">🔥 HOT DEAL</span>' : ''}
-  `;
-  modalBody.innerHTML = `
-    <div class="modal-row">
-      <svg class="modal-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><line x1="12" x2="12" y1="1" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
-      <div>
-        <div class="modal-info-label">Pricing</div>
-        <div style="display:flex;gap:var(--space-4);align-items:baseline">
-          <span style="font-size:var(--text-xl);font-weight:700;color:var(--color-notification);font-variant-numeric:tabular-nums">$${d.salePrice.toFixed(2)}</span>
-          <span style="color:var(--color-text-muted);text-decoration:line-through;font-size:var(--text-sm);font-variant-numeric:tabular-nums">$${d.origPrice.toFixed(2)} retail</span>
-        </div>
-        <div style="font-size:var(--text-xs);color:var(--color-success);font-weight:600;margin-top:2px">You save $${(d.origPrice - d.salePrice).toFixed(2)}</div>
-      </div>
-    </div>
-    <div class="modal-row">
-      <svg class="modal-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m2 7 4.41-4.41A2 2 0 0 1 7.83 2h8.34a2 2 0 0 1 1.42.59L22 7"/><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/></svg>
-      <div>
-        <div class="modal-info-label">Retailer</div>
-        <div class="modal-info-val" style="font-weight:600">${d.storeName}</div>
-        <div style="font-size:var(--text-xs);color:var(--color-text-muted)">${d.storeType}</div>
-      </div>
-    </div>
-    <div class="modal-row">
-      <svg class="modal-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-      <div>
-        <div class="modal-info-label">Location</div>
-        <div class="modal-info-val">${d.street}</div>
-        <div style="font-size:var(--text-xs);color:var(--color-text-muted)">${d.city} · ${d.distance} mi from you</div>
-      </div>
-    </div>
-    <div class="modal-row">
-      <svg class="modal-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-      <div>
-        <div class="modal-info-label">Store Hours</div>
-        <div class="modal-info-val">${d.hours}</div>
-      </div>
-    </div>
-    <div class="modal-row">
-      <svg class="modal-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.99 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.9 1.22h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 8a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-      <div>
-        <div class="modal-info-label">Contact</div>
-        <div class="modal-info-val">${d.phone}</div>
-      </div>
-    </div>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:var(--space-3);padding:var(--space-3);background:var(--color-surface-offset);border-radius:var(--radius-lg);">
-      <div><div class="modal-info-label">Category</div><div style="font-size:var(--text-sm)">${d.category}</div></div>
-      <div><div class="modal-info-label">Subcategory</div><div style="font-size:var(--text-sm)">${d.subcategory}</div></div>
-      <div><div class="modal-info-label">Items in Stock</div><div style="font-size:var(--text-sm);color:${d.qty <= 3 ? 'var(--color-notification)' : 'var(--color-success)'};font-weight:600">${d.qty <= 3 ? '⚠️ Only ' : ''}${d.qty} left</div></div>
-      <div><div class="modal-info-label">Deal Expires</div><div style="font-size:var(--text-sm)">In ${d.daysLeft} day${d.daysLeft !== 1 ? 's' : ''}</div></div>
-    </div>
-  `;
-  modalFooter.innerHTML = `
-    <button class="btn-primary" onclick="alert('Opening directions for ${d.storeName.replace(/'/g,"\'")}...')">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" style="display:inline;margin-right:6px;vertical-align:middle"><polygon points="3 11 22 2 13 21 11 13 3 11"/></svg>
-      Get Directions
-    </button>
-    <button class="btn-secondary" onclick="alert('Saved to your list!')">Save Deal</button>
-  `;
-
-  modal.classList.add("open");
-  modal.removeAttribute("aria-hidden");
-  document.getElementById("modal-close-btn").focus();
-  document.body.style.overflow = "hidden";
-}
-
-function closeDealModal() {
-  modal.classList.remove("open");
-  modal.setAttribute("aria-hidden", "true");
-  document.body.style.overflow = "";
-}
-
-document.getElementById("modal-close-btn").addEventListener("click", closeDealModal);
-modal.addEventListener("click", e => { if (e.target === modal) closeDealModal(); });
-document.addEventListener("keydown", e => { if (e.key === "Escape" && modal.classList.contains("open")) closeDealModal(); });
-
-// ── SEARCH / FILTER EVENTS ──
-searchBtn.addEventListener("click", () => {
-  keyword = keywordInput.value.trim();
-  currentZip = zipInput.value.trim() || "29303";
-  if (currentZip && !/^\d{5}$/.test(currentZip)) { alert("Please enter a valid 5-digit ZIP code."); return; }
-  // FIXED: No longer regenerating allDeals here to prevent loss of relevant matches
-  applyFilters();
-  buildCategoryList();
-  buildStoreTypeList();
-});
-
-keywordInput.addEventListener("keydown", e => { if (e.key === "Enter") searchBtn.click(); });
-zipInput.addEventListener("keydown", e => { if (e.key === "Enter") searchBtn.click(); });
-zipInput.addEventListener("input", () => { zipInput.value = zipInput.value.replace(/\D/g,"").slice(0,5); });
-
-distanceSlider.addEventListener("input", () => {
-  maxDistance = +distanceSlider.value;
-  distanceVal.textContent = maxDistance + " mi";
-  applyFilters();
-});
-
-sortSelect.addEventListener("change", () => {
-  sortBy = sortSelect.value;
-  applyFilters();
-});
-
-// Discount pills
-document.querySelectorAll(".discount-pill").forEach(pill => {
-  pill.addEventListener("click", () => {
-    document.querySelectorAll(".discount-pill").forEach(p => p.classList.remove("active"));
-    pill.classList.add("active");
-    discountMin = +pill.dataset.min;
-    applyFilters();
-  });
-});
-
-// View toggle
-document.getElementById("grid-view-btn").addEventListener("click", () => {
-  viewMode = "grid";
-  document.getElementById("grid-view-btn").classList.add("active");
-  document.getElementById("grid-view-btn").setAttribute("aria-pressed","true");
-  document.getElementById("list-view-btn").classList.remove("active");
-  document.getElementById("list-view-btn").setAttribute("aria-pressed","false");
-  renderResults();
-});
-document.getElementById("list-view-btn").addEventListener("click", () => {
-  viewMode = "list";
-  document.getElementById("list-view-btn").classList.add("active");
-  document.getElementById("list-view-btn").setAttribute("aria-pressed","true");
-  document.getElementById("grid-view-btn").classList.remove("active");
-  document.getElementById("grid-view-btn").setAttribute("aria-pressed","false");
-  renderResults();
-});
-
-// Mobile sidebar
-const mobileOverlay = document.getElementById("mobile-overlay");
-const mobileSidebar = document.getElementById("mobile-sidebar");
-const mobileContent = document.getElementById("mobile-sidebar-content");
-
-function openMobileSidebar() {
-  // Clone sidebar content
-  mobileContent.innerHTML = document.querySelector(".sidebar").innerHTML;
-  mobileContent.querySelectorAll("input[type=checkbox]").forEach(cb => {
-    cb.addEventListener("change", () => {
-      const desktopCb = document.querySelector(`[data-cat="${cb.dataset.cat}"], [data-sub="${cb.dataset.sub}"], [data-st="${cb.dataset.st}"]`);
-      if (desktopCb) { desktopCb.checked = cb.checked; desktopCb.dispatchEvent(new Event("change")); }
-    });
-  });
-  mobileContent.querySelector("#distance-slider")?.addEventListener("input", function() {
-    maxDistance = +this.value;
-    distanceVal.textContent = maxDistance + " mi";
-    applyFilters();
-  });
-  mobileSidebar.classList.add("open");
-  mobileOverlay.classList.add("open");
-  mobileOverlay.removeAttribute("aria-hidden");
-  mobileSidebar.removeAttribute("aria-hidden");
-  document.getElementById("mobile-close-btn").focus();
-  document.body.style.overflow = "hidden";
-}
-function closeMobileSidebar() {
-  mobileSidebar.classList.remove("open");
-  mobileOverlay.classList.remove("open");
-  mobileOverlay.setAttribute("aria-hidden","true");
-  mobileSidebar.setAttribute("aria-hidden","true");
-  document.body.style.overflow = "";
-}
-document.getElementById("mobile-filter-btn").addEventListener("click", openMobileSidebar);
-document.getElementById("mobile-close-btn").addEventListener("click", closeMobileSidebar);
-mobileOverlay.addEventListener("click", closeMobileSidebar);
-
-// ── ICON DEFS (inline SVG sprite) ──
-document.body.insertAdjacentHTML("afterbegin", `
-<svg width="0" height="0" style="position:absolute;overflow:hidden" aria-hidden="true">
-  <defs>
-    <symbol id="icon-shirt" viewBox="0 0 24 24"><path d="M20.38 3.46 16 2a4 4 0 0 1-8 0L3.62 3.46a2 2 0 0 0-1.34 2.23l.58 3.57a1 1 0 0 0 .99.84H6v10c0 1.1.9 2 2 2h8a2 2 0 0 0 2-2V10h2.15a1 1 0 0 0 .99-.84l.58-3.57a2 2 0 0 0-1.34-2.23z"/></symbol>
-    <symbol id="icon-monitor" viewBox="0 0 24 24"><rect width="20" height="14" x="2" y="3" rx="2"/><line x1="8" x2="16" y1="21" y2="21"/><line x1="12" x2="12" y1="17" y2="21"/></symbol>
-    <symbol id="icon-home" viewBox="0 0 24 24"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></symbol>
-    <symbol id="icon-bike" viewBox="0 0 24 24"><circle cx="18.5" cy="17.5" r="3.5"/><circle cx="5.5" cy="17.5" r="3.5"/><circle cx="15" cy="5" r="1"/><path d="M12 17.5V14l-3-3 4-3 2 3h2"/></symbol>
-    <symbol id="icon-heart" viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></symbol>
-    <symbol id="icon-gamepad-2" viewBox="0 0 24 24"><line x1="6" x2="10" y1="11" y2="11"/><line x1="8" x2="8" y1="9" y2="13"/><line x1="15" x2="15.01" y1="12" y2="12"/><line x1="17" x2="17.01" y1="10" y2="10"/><path d="M6 5h12a2 2 0 0 1 2 2v3.5a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2z"/><path d="M20 12.5V19a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-6.5"/></symbol>
-    <symbol id="icon-car" viewBox="0 0 24 24"><path d="M19 17H5M19 17a2 2 0 0 0 2-2v-4a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v4a2 2 0 0 0 2 2M19 17l1 2H4l1-2"/><path d="m14 9-1-4H11L10 9"/><circle cx="7.5" cy="17.5" r=".5"/><circle cx="16.5" cy="17.5" r=".5"/></symbol>
-    <symbol id="icon-book-open" viewBox="0 0 24 24"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></symbol>
-  </defs>
-</svg>`);
-
-// ── INIT ──
-buildCategoryList();
-buildSubcategoryList();
-buildStoreTypeList();
-zipInput.value = "29303";
-applyFilters();
-</script>
 </body>
 </html>
